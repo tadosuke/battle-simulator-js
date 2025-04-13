@@ -11,11 +11,13 @@ describe("BattleSequence", () => {
         expect(seq.party2).toBe(party2);
     });
 
-    test("executeメソッドが BATTLE_RESULT.PARTY1_WON を返すか？", () => {
+    test("最大ターン数が経過しても決着が付かない場合、引き分けになるか？", () => {
         const party1 = new Party("party1", []);
         const party2 = new Party("party2", []);
-        const seq = new BattleSequence(party1, party2);
+        const maxTurnNum = 2;
+        const seq = new BattleSequence(party1, party2, maxTurnNum);
 
-        expect(seq.execute()).toBe(BATTLE_RESULT.PARTY1_WON);
+        const result = seq.execute();
+        expect(result).toBe(BATTLE_RESULT.DRAW);
     });
 });

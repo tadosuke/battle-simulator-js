@@ -5,7 +5,6 @@ export const TURN_RESULT = {
     CONTINUE: 0, // 継続中
     PARTY1_WON: 1, // パーティ1の勝利
     PARTY2_WON: 2, // パーティ2の勝利
-    DRAW: 3, // 引き分け
 };
 
 /**
@@ -24,6 +23,7 @@ export class BattleTurn {
      * @returns 戦闘の結果（TURN_RESULT）
      */
     execute() {
+        console.log("ターン開始");
         return TURN_RESULT.CONTINUE;
     }
 }
