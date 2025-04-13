@@ -23,6 +23,7 @@ describe("Character", () => {
         const character = new Character("Hero", 100, 20, 10, 5);
 
         const damage = character.takeDamage(120);
+        expect(character.isDefeated()).toBe(true);
         expect(character.hp).toBe(0);
         expect(damage).toBe(120);
     });
