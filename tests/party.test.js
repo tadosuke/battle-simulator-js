@@ -1,14 +1,13 @@
+import Character from "../src/character";
 import Party from "../src/party";
 
 describe("Party", () => {
     test("コンストラクタで渡した引数がメンバーに設定されているか？", () => {
-        const characters = [
-            { name: "Hero", hp: 100, atk: 20, def: 10, spd: 5 },
-            { name: "Mage", hp: 80, atk: 25, def: 5, spd: 10 },
-        ];
-        const party = new Party(0, characters);
+        const hero = new Character("Hero", 100, 20, 10, 5);
+        const mage = new Character("Mage", 80, 25, 5, 10);
+        const party = new Party(0, [hero, mage]);
 
         expect(party.id).toBe(0);
-        expect(party.characters).toEqual(characters);
+        expect(party.characters).toEqual([hero, mage]);
     });
 });
