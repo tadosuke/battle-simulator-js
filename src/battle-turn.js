@@ -20,6 +20,23 @@ export class BattleTurn {
     execute() {
         const isFinished = false; // 戦闘が終了したかどうかを判定するロジックを追加予定
 
+        const charactersBySpeed = this.getCharactersBySpeed();
+        for (const character of charactersBySpeed) {
+            // キャラクターの行動を実行するロジックを追加予定
+            // 例: character.act(this.party1, this.party2);
+            console.log(`${character.name}の行動`);
+        }
+
         return isFinished;
+    }
+
+    // 素早さの高い順にソートした全キャラクターリストを取得する
+    getCharactersBySpeed() {
+        const allCharacters = [
+            ...this.party1.characters,
+            ...this.party2.characters,
+        ];
+        allCharacters.sort((a, b) => b.spd - a.spd);
+        return allCharacters;
     }
 }
