@@ -22,8 +22,8 @@ describe("Character", () => {
     test("残りHP以上のダメージを受けたとき、HPが0になるか？", () => {
         const character = new Character("Hero", 100, 20, 10, 5);
 
-        const damage = character.takeDamage(100);
+        const damage = character.takeDamage(120);
         expect(character.hp).toBe(0);
-        expect(damage).toBe(100);
+        expect(damage).toBe(120);
     });
 });
