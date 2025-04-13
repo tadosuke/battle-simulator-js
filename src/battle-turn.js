@@ -15,15 +15,13 @@ export class BattleTurn {
 
     /**
      * ターンを実行する
-     * @returns {{isFinished: boolean}} 戦闘の結果
+     * @returns {boolean} 戦闘が終了したかどうか
      */
     execute() {
         const isFinished = false; // 戦闘が終了したかどうかを判定するロジックを追加予定
 
         // 必要に応じて party1 と party2 の状態を更新するロジックを追加予定
 
-        return {
-            isFinished,
-        };
+        return isFinished;
     }
 }

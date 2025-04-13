@@ -12,15 +12,13 @@ describe("BattleTurn", () => {
         expect(turn.party2).toBe(party2);
     });
 
-    test("executeメソッドが正しいオブジェクトを返すか？", () => {
+    test("executeメソッドが正しい値を返すか？", () => {
         const party1 = new Party("party1", [new Character("character1")]);
         const party2 = new Party("party2", [new Character("character2")]);
         const battleTurn = new BattleTurn(1, party1, party2);
 
-        const result = battleTurn.execute();
+        const isFinished = battleTurn.execute();
 
-        expect(result).toEqual({
-            isFinished: false,
-        });
+        expect(isFinished).toBe(false);
     });
 });
