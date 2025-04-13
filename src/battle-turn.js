@@ -15,7 +15,7 @@ export class BattleTurn {
 
     /**
      * ターンを実行する
-     * @returns {{isFinished: boolean, party1: Party, party2: Party}} 戦闘の結果
+     * @returns {{isFinished: boolean}} 戦闘の結果
      */
     execute() {
         const isFinished = false; // 戦闘が終了したかどうかを判定するロジックを追加予定
@@ -24,8 +24,6 @@ export class BattleTurn {
 
         return {
             isFinished,
-            party1: this.party1,
-            party2: this.party2,
         };
     }
 }
