@@ -14,4 +14,14 @@ export default class Character {
         this.def = def;
         this.spd = spd;
     }
+
+    /**
+     * ダメージを受ける
+     * @param {number} attackPower - 攻撃力
+     * @returns {number} - 受けたダメージ
+     */
+    takeDamage(attackPower) {
+        this.hp = Math.max(this.hp - attackPower, 0);
+        return attackPower;
+    }
 }
