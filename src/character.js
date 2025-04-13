@@ -24,4 +24,12 @@ export default class Character {
         this.hp = Math.max(this.hp - attackPower, 0);
         return attackPower;
     }
+
+    /**
+     * キャラクターが倒されているかを判定する
+     * @returns {boolean} - 倒されている場合はtrue、そうでない場合はfalse
+     */
+    isDefeated() {
+        return this.hp <= 0;
+    }
 }

@@ -1,12 +1,5 @@
 import Party from "./party.js";
 
-// 実行結果
-export const TURN_RESULT = {
-    CONTINUE: 0, // 継続中
-    PARTY1_WON: 1, // パーティ1の勝利
-    PARTY2_WON: 2, // パーティ2の勝利
-};
-
 /**
  * 戦闘における1ターンを表すクラス
  * @param {number} turnNumber - 現在のターン番号
@@ -22,10 +15,17 @@ export class BattleTurn {
 
     /**
      * ターンを実行する
-     * @returns 戦闘の結果（TURN_RESULT）
+     * @returns {{isFinished: boolean, party1: Party, party2: Party}} 戦闘の結果
      */
     execute() {
-        console.log("ターン開始");
-        return TURN_RESULT.CONTINUE;
+        const isFinished = false; // 戦闘が終了したかどうかを判定するロジックを追加予定
+
+        // 必要に応じて party1 と party2 の状態を更新するロジックを追加予定
+
+        return {
+            isFinished,
+            party1: this.party1,
+            party2: this.party2,
+        };
     }
 }

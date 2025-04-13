@@ -10,4 +10,12 @@ export default class Party {
         this.id = id; // パーティーのID
         this.characters = characters; // キャラクターの配列
     }
+
+    /**
+     * パーティーが全滅しているかを判定する
+     * @returns {boolean} - 全滅している場合はtrue、そうでない場合はfalse
+     */
+    isDefeated() {
+        return this.characters.every((character) => character.isDefeated());
+    }
 }

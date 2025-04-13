@@ -12,11 +12,16 @@ describe("BattleTurn", () => {
         expect(turn.party2).toBe(party2);
     });
 
-    test("executeメソッドがTURN_RESULT.CONTINUEを返すか？", () => {
+    test("executeメソッドが正しいオブジェクトを返すか？", () => {
         const party1 = new Party("party1", [new Character("character1")]);
         const party2 = new Party("party2", [new Character("character2")]);
         const turn = new battleTurn.BattleTurn(1, party1, party2);
 
-        expect(turn.execute()).toBe(battleTurn.TURN_RESULT.CONTINUE);
+        const result = turn.execute();
+        expect(result).toEqual({
+            isFinished: false,
+            party1: party1,
+            party2: party2,
+        });
     });
 });
