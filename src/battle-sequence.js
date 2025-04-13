@@ -31,7 +31,7 @@ export class BattleSequence {
         let turnNum = 1;
         let turnResult;
         do {
-            let turn = new BattleTurn(this.party1, this.party2);
+            let turn = new BattleTurn(turnNum, this.party1, this.party2);
             turnResult = turn.execute();
             turnNum++;
         } while (
