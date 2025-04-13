@@ -1,7 +1,7 @@
 import Character from "../src/character";
 
 describe("Character", () => {
-    test("コンストラクタで渡した引数がメンバーに設定されているか？", () => {
+    test("初期化後の状態が正しいか？", () => {
         const character = new Character("Hero", 100, 20, 10, 5);
 
         expect(character.name).toBe("Hero");
@@ -9,6 +9,7 @@ describe("Character", () => {
         expect(character.atk).toBe(20);
         expect(character.def).toBe(10);
         expect(character.spd).toBe(5);
+        expect(character.partyId).toBe(undefined);
     });
 
     test("残りHP以上のダメージを受けたとき、HPが0になるか？", () => {
