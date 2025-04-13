@@ -21,8 +21,9 @@ export default class Character {
      * @returns {number} - 受けたダメージ
      */
     takeDamage(attackPower) {
-        this.hp = Math.max(this.hp - attackPower, 0);
-        return attackPower;
+        const damage = Math.max(attackPower - this.def, 0);
+        this.hp = Math.max(this.hp - damage, 0);
+        return damage;
     }
 
     /**
