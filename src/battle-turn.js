@@ -20,8 +20,6 @@ export class BattleTurn {
     execute() {
         const isFinished = false; // 戦闘が終了したかどうかを判定するロジックを追加予定
 
-        // 必要に応じて party1 と party2 の状態を更新するロジックを追加予定
-
         return isFinished;
     }
 }

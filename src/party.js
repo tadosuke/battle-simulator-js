@@ -9,6 +9,9 @@ export default class Party {
     constructor(id, characters) {
         this.id = id; // パーティーのID
         this.characters = characters; // キャラクターの配列
+
+        // キャラクターにパーティーIDを設定
+        this.characters.forEach((character) => character.partyId = this.id);
     }
 
     /**

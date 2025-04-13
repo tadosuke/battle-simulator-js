@@ -13,6 +13,7 @@ export default class Character {
         this.atk = atk;
         this.def = def;
         this.spd = spd;
+        this.partyId = undefined; // 所属パーティー
     }
 
     /**
