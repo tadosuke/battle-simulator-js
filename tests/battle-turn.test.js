@@ -58,32 +58,6 @@ describe("selectTarget", () => {
     });
 });
 
-describe("processCharacterTurn", () => {
-    test("ターゲットに攻撃するか？", () => {
-        const character = new Character("character1", 100, 10, 0, 0);
-        const target = new Character("target", 100, 10, 0, 0);
-        const party1 = new Party("party1", [character]);
-        const party2 = new Party("party2", [target]);
-        const battleTurn = new BattleTurn(1, party1, party2);
-
-        battleTurn.processCharacterTurn(character);
-
-        expect(target.hp).toBe(90); // ダメージを受けている
-    });
-
-    test("HP が 0 の場合、何もしないか？", () => {
-        const character = new Character("character1", 0, 10, 5, 3);
-        const target = new Character("target", 100, 8, 6, 2);
-        const party1 = new Party("party1", [character]);
-        const party2 = new Party("party2", [target]);
-        const battleTurn = new BattleTurn(1, party1, party2);
-
-        battleTurn.processCharacterTurn(character);
-
-        expect(target.hp).toBe(100); // ダメージを受けていない
-    });
-});
-
 describe("getCharactersBySpeed", () => {
     test("キャラクターを素早さの降順でソートするか？", () => {
         const character1 = new Character("character1", 100, 10, 10, 10); // speed: 10

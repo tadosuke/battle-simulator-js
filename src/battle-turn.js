@@ -22,7 +22,12 @@ export class BattleTurn {
         const logs = [];
 
         for (const character of charactersBySpeed) {
-            logs.push(...this.processCharacterTurn(character));
+            const enemyParty =
+                character.partyId === this.party1.id
+                    ? this.party2
+                    : this.party1;
+            const actionLogs = character.act(enemyParty);
+            logs.push(...actionLogs);
 
             // どちらかのパーティーが全滅している場合、戦闘終了
             if (this.party1.isDefeated() || this.party2.isDefeated()) {
@@ -43,22 +48,6 @@ export class BattleTurn {
         const targetParty =
             character.partyId === this.party1.id ? this.party2 : this.party1;
         return targetParty.characters.find((c) => c.hp > 0) || null;
-    }
-
-    /**
-     * キャラクターのターンを処理する
-     * @param {Character} character
-     * @returns {string[]} ログの配列
-     */
-    processCharacterTurn(character) {
-        const logs = [];
-
-        const enemyParty =
-            character.partyId === this.party1.id ? this.party2 : this.party1;
-        const actionLogs = character.act(enemyParty);
-        logs.push(...actionLogs);
-
-        return logs;
     }
 
     /**
