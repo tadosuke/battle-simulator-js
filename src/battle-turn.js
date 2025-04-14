@@ -53,25 +53,10 @@ export class BattleTurn {
     processCharacterTurn(character) {
         const logs = [];
 
-        if (character.hp <= 0) {
-            return logs; // HPが0以下のキャラクターは行動できない
-        }
-
-        // ターゲットの選択
-        const target = this.selectTarget(character);
-        if (!target) {
-            return logs;
-        }
-
-        // ターゲットに攻撃
-        const damage = target.takeDamage(character.atk);
-        logs.push(
-            `${character.name}が${target.name}に${damage}のダメージを与えた`
-        );
-
-        if (target.isDefeated()) {
-            logs.push(`${target.name}が倒れた`);
-        }
+        const enemyParty =
+            character.partyId === this.party1.id ? this.party2 : this.party1;
+        const actionLogs = character.act(enemyParty);
+        logs.push(...actionLogs);
 
         return logs;
     }

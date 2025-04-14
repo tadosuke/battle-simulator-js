@@ -18,18 +18,26 @@ export default class Character {
 
     /**
      * 行動する
+     * @param {Party} enemyParty - 敵パーティー
      * @returns {string[]} ログの配列
      */
-    act() {
+    act(enemyParty) {
         const logs = [];
+
         if (this.hp <= 0) {
-            return logs;
+            return logs; // HPが0以下のキャラクターは行動できない
         }
 
-        // todo:ターゲットの選択
+        // ターゲットの選択
+        const target = this.selectTarget(enemyParty);
 
-        // todo:ターゲットに攻撃
-        logs.push(`${this.name}の攻撃`);
+        // ターゲットに攻撃
+        const damage = target.takeDamage(this.atk);
+        logs.push(`${this.name}が${target.name}に${damage}のダメージを与えた`);
+
+        if (target.isDefeated()) {
+            logs.push(`${target.name}が倒れた`);
+        }
 
         return logs;
     }
