@@ -23,20 +23,14 @@ export class BattleTurn {
         for (const character of charactersBySpeed) {
             this.processCharacterTurn(character);
 
-            // どちらかのパーティーが全滅しているかを確認
-            const party1Alive = this.party1.characters.some(
-                (c) => !c.isDefeated()
-            );
-            const party2Alive = this.party2.characters.some(
-                (c) => !c.isDefeated()
-            );
-
-            if (!party1Alive || !party2Alive) {
-                return true; // どちらかのパーティーが全滅している場合、戦闘終了
+            // どちらかのパーティーが全滅している場合、戦闘終了
+            if (this.party1.isDefeated() || this.party2.isDefeated()) {
+                return true;
             }
         }
 
-        return false; // 両方のパーティーが生存している場合、戦闘継続
+        // 戦闘継続
+        return false;
     }
 
     processCharacterTurn(character) {
