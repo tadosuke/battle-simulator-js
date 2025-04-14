@@ -14,6 +14,15 @@ export class BattleTurn {
     }
 
     /**
+     * 指定されたキャラクターの敵パーティを取得する
+     * @param {Character} character - キャラクター
+     * @returns {Party} 敵パーティ
+     */
+    getEnemyParty(character) {
+        return character.partyId === this.party1.id ? this.party2 : this.party1;
+    }
+
+    /**
      * ターンを実行する
      * @returns {{ isFinished: boolean, logs: string[] }} 戦闘が終了したかどうかとログ
      */
@@ -22,10 +31,7 @@ export class BattleTurn {
         const logs = [];
 
         for (const character of charactersBySpeed) {
-            const enemyParty =
-                character.partyId === this.party1.id
-                    ? this.party2
-                    : this.party1;
+            const enemyParty = this.getEnemyParty(character);
             const actionLogs = character.act(enemyParty);
             logs.push(...actionLogs);
 
