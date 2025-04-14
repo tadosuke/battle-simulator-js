@@ -24,25 +24,32 @@ export class BattleSequence {
 
     /**
      * 戦闘を実行する
-     * @returns 戦闘の結果（BATTLE_RESULT）
+     * @returns {{ result: number, logs: string[] }} 戦闘の結果とログ
      */
     execute() {
         // 戦闘が終了するか、ターン数が最大に達するまでループ
         let turnNum = 1;
         let isFinished = false;
+        const logs = [];
+
         do {
             let turn = new BattleTurn(turnNum, this.party1, this.party2);
-            isFinished = turn.execute();
+            const { isFinished: turnFinished, logs: turnLogs } = turn.execute();
+            logs.push(...turnLogs);
+            isFinished = turnFinished;
             turnNum++;
         } while (!isFinished && turnNum <= this.maxTurnNum);
 
-        // 戦闘の結果を返す
+        // 戦闘の結果を決定
+        let result;
         if (this.party1.isDefeated()) {
-            return BATTLE_RESULT.PARTY2_WON;
+            result = BATTLE_RESULT.PARTY2_WON;
         } else if (this.party2.isDefeated()) {
-            return BATTLE_RESULT.PARTY1_WON;
+            result = BATTLE_RESULT.PARTY1_WON;
         } else {
-            return BATTLE_RESULT.DRAW;
+            result = BATTLE_RESULT.DRAW;
         }
+
+        return { result, logs };
     }
 }

@@ -24,9 +24,10 @@ describe("execute", () => {
         ]);
         const battleTurn = new BattleTurn(1, party1, party2);
 
-        const isFinished = battleTurn.execute();
+        const { isFinished, logs } = battleTurn.execute();
 
         expect(isFinished).toBe(false);
+        expect(Array.isArray(logs)).toBe(true); // ログが配列であることを確認
     });
 });
 

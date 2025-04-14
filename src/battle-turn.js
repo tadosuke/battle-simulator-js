@@ -15,31 +15,35 @@ export class BattleTurn {
 
     /**
      * ターンを実行する
-     * @returns {boolean} 戦闘が終了したかどうか
+     * @returns {{ isFinished: boolean, logs: string[] }} 戦闘が終了したかどうかとログ
      */
     execute() {
         const charactersBySpeed = this.getCharactersBySpeed();
+        const logs = [];
 
         for (const character of charactersBySpeed) {
-            this.processCharacterTurn(character);
+            logs.push(...this.processCharacterTurn(character));
 
             // どちらかのパーティーが全滅している場合、戦闘終了
             if (this.party1.isDefeated() || this.party2.isDefeated()) {
-                return true;
+                return { isFinished: true, logs };
             }
         }
 
         // 戦闘継続
-        return false;
+        return { isFinished: false, logs };
     }
 
     /**
      * キャラクターのターンを処理する
      * @param {Character} character
+     * @returns {string[]} ログの配列
      */
     processCharacterTurn(character) {
+        const logs = [];
+
         if (character.hp <= 0) {
-            return; // HPが0以下のキャラクターは行動できない
+            return logs; // HPが0以下のキャラクターは行動できない
         }
 
         // ターゲットの選択
@@ -47,18 +51,18 @@ export class BattleTurn {
             character.partyId === this.party1.id ? this.party2 : this.party1;
         const target = targetParty.characters.find((c) => c.hp > 0);
         if (!target) {
-            return;
+            return logs;
         }
 
         // ターゲットに攻撃
         const damage = target.takeDamage(character.atk);
-        console.log(
-            `${character.name}が${target.name}に${damage}のダメージを与えた`
-        );
+        logs.push(`${character.name}が${target.name}に${damage}のダメージを与えた`);
 
         if (target.isDefeated()) {
-            console.log(`${target.name}が倒れた`);
+            logs.push(`${target.name}が倒れた`);
         }
+
+        return logs;
     }
 
     /**
