@@ -33,6 +33,10 @@ export class BattleTurn {
         return false;
     }
 
+    /**
+     * キャラクターのターンを処理する
+     * @param {Character} character
+     */
     processCharacterTurn(character) {
         if (character.hp <= 0) {
             return; // HPが0以下のキャラクターは行動できない
@@ -58,7 +62,10 @@ export class BattleTurn {
         }
     }
 
-    // 素早さの高い順にソートした全キャラクターリストを取得する
+    /**
+     * 素早さの高い順にソートした全キャラクターの配列を取得する
+     * @returns {Character[]} 素早さの高い順にソートされたキャラクターの配列
+     */
     getCharactersBySpeed() {
         const allCharacters = [
             ...this.party1.characters,
