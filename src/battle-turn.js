@@ -42,16 +42,15 @@ export class BattleTurn {
             return; // HPが0以下のキャラクターは行動できない
         }
 
+        // ターゲットの選択
         const targetParty =
             character.partyId === this.party1.id ? this.party2 : this.party1;
-        const target = targetParty.characters.find((c) => c.hp > 0); // 生存しているキャラクターをターゲットにする
-
+        const target = targetParty.characters.find((c) => c.hp > 0);
         if (!target) {
-            // ターゲットがいない場合、戦闘終了
-            return true;
+            return;
         }
 
-        // キャラクターの行動（例: 攻撃）
+        // ターゲットに攻撃
         const damage = target.takeDamage(character.atk);
         console.log(
             `${character.name}が${target.name}に${damage}のダメージを与えた`
