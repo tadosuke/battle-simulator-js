@@ -18,7 +18,7 @@ export class BattleTurn {
      * @param {Character} character - キャラクター
      * @returns {Party} 敵パーティ
      */
-    #getEnemyParty(character) {
+    getEnemyParty(character) {
         return character.partyId === this.party1.id ? this.party2 : this.party1;
     }
 
@@ -31,7 +31,7 @@ export class BattleTurn {
         const logs = [];
 
         for (const character of charactersBySpeed) {
-            const enemyParty = this.#getEnemyParty(character);
+            const enemyParty = this.getEnemyParty(character);
             const actionLogs = character.act(enemyParty);
             logs.push(...actionLogs);
 
