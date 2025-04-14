@@ -17,6 +17,44 @@ export default class Character {
     }
 
     /**
+     * 行動する
+     * @returns {string[]} ログの配列
+     */
+    act() {
+        const logs = [];
+        if (this.hp <= 0) {
+            return logs;
+        }
+
+        // todo:ターゲットの選択
+
+        // todo:ターゲットに攻撃
+        logs.push(`${this.name}の攻撃`);
+
+        return logs;
+    }
+
+    /**
+     * ターゲットを選択する
+     * @param {Party} enemyParty - 敵パーティー
+     * @returns {Character | null} - 選択されたターゲットキャラクター、またはnull（ターゲットがいない場合）
+     */
+    selectTarget(enemyParty) {
+        // パーティー内から生存しているキャラクターをランダムで選択する
+        const aliveCharacters = enemyParty.characters.filter((c) => c.hp > 0);
+        if (aliveCharacters.length === 0) {
+            // 戦闘が終了していないとおかしい
+            throw new Error("No alive characters in the enemy party.");
+        }
+
+        // ランダムに選択
+        const target =
+            aliveCharacters[Math.floor(Math.random() * aliveCharacters.length)];
+
+        return target;
+    }
+
+    /**
      * ダメージを受ける
      * @param {number} attackPower - 攻撃力
      * @returns {number} - 受けたダメージ
