@@ -35,6 +35,17 @@ export class BattleTurn {
     }
 
     /**
+     * ターゲットを選択する
+     * @param {Character} character - 攻撃者キャラクター
+     * @returns {Character|null} ターゲットキャラクター、またはnull（ターゲットがいない場合）
+     */
+    selectTarget(character) {
+        const targetParty =
+            character.partyId === this.party1.id ? this.party2 : this.party1;
+        return targetParty.characters.find((c) => c.hp > 0) || null;
+    }
+
+    /**
      * キャラクターのターンを処理する
      * @param {Character} character
      * @returns {string[]} ログの配列
@@ -47,16 +58,16 @@ export class BattleTurn {
         }
 
         // ターゲットの選択
-        const targetParty =
-            character.partyId === this.party1.id ? this.party2 : this.party1;
-        const target = targetParty.characters.find((c) => c.hp > 0);
+        const target = this.selectTarget(character);
         if (!target) {
             return logs;
         }
 
         // ターゲットに攻撃
         const damage = target.takeDamage(character.atk);
-        logs.push(`${character.name}が${target.name}に${damage}のダメージを与えた`);
+        logs.push(
+            `${character.name}が${target.name}に${damage}のダメージを与えた`
+        );
 
         if (target.isDefeated()) {
             logs.push(`${target.name}が倒れた`);
