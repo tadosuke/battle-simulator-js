@@ -25,18 +25,20 @@ export default class Character {
         const logs = [];
 
         if (this.hp <= 0) {
-            return logs; // HPが0以下のキャラクターは行動できない
+            return logs;
         }
+
+        logs.push(`${this.name} の攻撃！`);
 
         // ターゲットの選択
         const target = this.selectTarget(enemyParty);
 
         // ターゲットに攻撃
         const damage = target.takeDamage(this.atk);
-        logs.push(`${this.name}が${target.name}に${damage}のダメージを与えた`);
+        logs.push(`${target.name} に ${damage} のダメージ！`);
 
         if (target.isDefeated()) {
-            logs.push(`${target.name}が倒れた`);
+            logs.push(`${target.name} が倒れた`);
         }
 
         return logs;
