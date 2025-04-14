@@ -16,8 +16,12 @@ describe("constructor", () => {
 
 describe("execute", () => {
     test("executeメソッドが正しい値を返すか？", () => {
-        const party1 = new Party("party1", [new Character("character1")]);
-        const party2 = new Party("party2", [new Character("character2")]);
+        const party1 = new Party("party1", [
+            new Character("character1", 100, 10, 5, 3),
+        ]);
+        const party2 = new Party("party2", [
+            new Character("character2", 100, 8, 6, 2),
+        ]);
         const battleTurn = new BattleTurn(1, party1, party2);
 
         const isFinished = battleTurn.execute();

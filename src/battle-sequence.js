@@ -32,10 +32,9 @@ export class BattleSequence {
         let isFinished = false;
         do {
             let turn = new BattleTurn(turnNum, this.party1, this.party2);
-            const result = turn.execute();
-            isFinished = result.isFinished;
+            isFinished = turn.execute();
             turnNum++;
-        } while (!isFinished && turnNum < MAX_TURN_NUM);
+        } while (!isFinished && turnNum <= this.maxTurnNum);
 
         // 戦闘の結果を返す
         if (this.party1.isDefeated()) {

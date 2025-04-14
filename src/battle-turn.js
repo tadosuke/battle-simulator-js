@@ -18,16 +18,40 @@ export class BattleTurn {
      * @returns {boolean} 戦闘が終了したかどうか
      */
     execute() {
-        const isFinished = false; // 戦闘が終了したかどうかを判定するロジックを追加予定
-
         const charactersBySpeed = this.getCharactersBySpeed();
+
         for (const character of charactersBySpeed) {
-            // キャラクターの行動を実行するロジックを追加予定
-            // 例: character.act(this.party1, this.party2);
-            console.log(`${character.name}の行動`);
+            if (character.hp <= 0) {
+                continue; // HPが0以下のキャラクターは行動できない
+            }
+
+            const targetParty =
+                character.partyId === this.party1.id
+                    ? this.party2
+                    : this.party1;
+            const target = targetParty.characters.find((c) => c.hp > 0); // 生存しているキャラクターをターゲットにする
+
+            if (!target) {
+                // ターゲットがいない場合、戦闘終了
+                return true;
+            }
+
+            // キャラクターの行動（例: 攻撃）
+            const damage = target.takeDamage(character.atk);
+            console.log(
+                `${character.name}が${target.name}に${damage}のダメージを与えた`
+            );
+
+            if (target.isDefeated()) {
+                console.log(`${target.name}が倒れた`);
+            }
         }
 
-        return isFinished;
+        // どちらかのパーティーが全滅しているかを確認
+        const party1Alive = this.party1.characters.some((c) => !c.isDefeated());
+        const party2Alive = this.party2.characters.some((c) => !c.isDefeated());
+
+        return !(party1Alive && party2Alive); // 両方のパーティーが生存していない場合、戦闘終了
     }
 
     // 素早さの高い順にソートした全キャラクターリストを取得する
