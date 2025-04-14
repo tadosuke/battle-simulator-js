@@ -1,4 +1,4 @@
-import { Character } from "./character.js";
+import Character from "./character.js";
 
 /**
  * 複数のキャラクターを含むパーティークラス
@@ -11,7 +11,7 @@ export default class Party {
         this.characters = characters; // キャラクターの配列
 
         // キャラクターにパーティーIDを設定
-        this.characters.forEach((character) => character.partyId = this.id);
+        this.characters.forEach((character) => (character.partyId = this.id));
     }
 
     /**
