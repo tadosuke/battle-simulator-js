@@ -31,33 +31,6 @@ describe("execute", () => {
     });
 });
 
-describe("selectTarget", () => {
-    test("敵パーティからHPが正のキャラクターを選択するか？", () => {
-        const hero = new Character("Hero", 100, 10, 5, 3);
-        const defeatedVillain = new Character("Villain1", 0, 10, 6, 2); // HPが0
-        const activeVillain = new Character("Villain2", 50, 10, 6, 2);
-        const party1 = new Party("party1", [hero]);
-        const party2 = new Party("party2", [defeatedVillain, activeVillain]);
-        const battleTurn = new BattleTurn(1, party1, party2);
-
-        const target = battleTurn.selectTarget(hero);
-
-        expect(target).toBe(activeVillain); // 正しいターゲットが選択される
-    });
-
-    test("敵パーティに有効なターゲットがいない場合、nullを返すか？", () => {
-        const character1 = new Character("Hero", 100, 10, 5, 3);
-        const character2 = new Character("Villain", 0, 10, 6, 2); // HPが0
-        const party1 = new Party("party1", [character1]);
-        const party2 = new Party("party2", [character2]);
-        const battleTurn = new BattleTurn(1, party1, party2);
-
-        const target = battleTurn.selectTarget(character1);
-
-        expect(target).toBeNull(); // ターゲットがいない場合はnull
-    });
-});
-
 describe("getCharactersBySpeed", () => {
     test("キャラクターを素早さの降順でソートするか？", () => {
         const character1 = new Character("character1", 100, 10, 10, 10); // speed: 10
