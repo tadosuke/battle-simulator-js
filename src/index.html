@@ -18,6 +18,16 @@
             fieldset {
                 min-width: 0;
             }
+            .log-box {
+                max-height: 300px;
+                overflow-y: auto;
+                border: 1px solid #ccc;
+                padding: 1em;
+                background: #fafafa;
+                margin-top: 1em;
+                font-family: monospace;
+                white-space: pre-wrap;
+            }
         </style>
     </head>
     <body>
@@ -145,6 +155,6 @@
             </div>
             <button type="button" id="start-btn">実行</button>
         </form>
-        <div id="output"></div>
+        <div id="output" class="log-box"></div>
     </body>
 </html>
