@@ -39,7 +39,7 @@ function createCharacterEditor(idPrefix, label) {
     return wrapper;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function initialize() {
     const output = document.getElementById("output");
     const startBtn = document.getElementById("start-btn");
     const editors = document.getElementById("character-editors");
@@ -94,4 +94,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     startBtn.addEventListener("click", handleBattleStart);
-});
+}
+
+document.addEventListener("DOMContentLoaded", initialize);
