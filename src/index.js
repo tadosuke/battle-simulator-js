@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     groups.appendChild(enemyEditor);
     editors.appendChild(groups);
 
-    startBtn.addEventListener("click", () => {
+    function handleBattleStart() {
         output.innerHTML = "";
         // プレイヤー
         const name = document.getElementById("char-name").value;
@@ -91,5 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 : "Draw"
         }`;
         output.appendChild(resultElement);
-    });
+    }
+
+    startBtn.addEventListener("click", handleBattleStart);
 });
