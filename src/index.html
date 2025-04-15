@@ -52,7 +52,30 @@
     <body>
         <h1>Battle Simulator</h1>
         <form id="character-form">
-            <div id="character-editors"></div>
+            <div class="form-groups">
+                <fieldset class="form-group">
+                    <legend>プレイヤーキャラクター</legend>
+                    <div id="player-editors"></div>
+                    <div class="button-wrapper">
+                        <button type="button" id="add-player-btn">
+                            ＋追加
+                        </button>
+                        <button type="button" id="remove-player-btn">
+                            －削除
+                        </button>
+                    </div>
+                </fieldset>
+                <fieldset class="form-group">
+                    <legend>エネミーキャラクター</legend>
+                    <div id="enemy-editors"></div>
+                    <div class="button-wrapper">
+                        <button type="button" id="add-enemy-btn">＋追加</button>
+                        <button type="button" id="remove-enemy-btn">
+                            －削除
+                        </button>
+                    </div>
+                </fieldset>
+            </div>
             <div class="button-wrapper">
                 <button type="button" id="start-btn">実行</button>
             </div>

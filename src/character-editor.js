@@ -19,7 +19,15 @@ export function createCharacterEditor(idPrefix, label) {
             key: "name",
             label: "名前",
             type: "text",
-            defaultValue: idPrefix === "char" ? "Hero" : "Enemy",
+            defaultValue: /^char(\d+)$/.test(idPrefix)
+                ? `Player ${idPrefix.match(/\d+/)[0]}`
+                : /^enemy(\d+)$/.test(idPrefix)
+                ? `Enemy ${idPrefix.match(/\d+/)[0]}`
+                : idPrefix === "char"
+                ? "Player 1"
+                : idPrefix === "enemy"
+                ? "Enemy 1"
+                : "",
         },
         { key: "hp", label: "HP", type: "number", defaultValue: 100 },
         { key: "atk", label: "攻撃力", type: "number", defaultValue: 20 },

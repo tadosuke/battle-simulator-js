@@ -3,28 +3,35 @@ import Character from "./character.js";
 import { BattleSequence, BATTLE_RESULT } from "./battle-sequence.js";
 import { createCharacterEditor } from "./character-editor.js";
 
-/**
- * バトル開始時の処理。フォームからキャラクター情報を取得し、バトルを実行して結果を表示する。
- * @param {HTMLElement} output 結果表示用の要素
- */
+const MIN_CHAR = 1;
+const MAX_CHAR = 4;
+
+function getCharacterValues(prefix, index) {
+    const id = index + 1;
+    const name = document.getElementById(`${prefix}${id}-name`).value;
+    const hp = Number(document.getElementById(`${prefix}${id}-hp`).value);
+    const atk = Number(document.getElementById(`${prefix}${id}-atk`).value);
+    const def = Number(document.getElementById(`${prefix}${id}-def`).value);
+    const spd = Number(document.getElementById(`${prefix}${id}-spd`).value);
+    return new Character(name, hp, atk, def, spd);
+}
+
 export function handleBattleStart(output) {
     output.innerHTML = "";
     // プレイヤー
-    const name = document.getElementById("char-name").value;
-    const hp = Number(document.getElementById("char-hp").value);
-    const atk = Number(document.getElementById("char-atk").value);
-    const def = Number(document.getElementById("char-def").value);
-    const spd = Number(document.getElementById("char-spd").value);
-    const party1 = new Party(1, [new Character(name, hp, atk, def, spd)]);
-    // 敵
-    const enemyName = document.getElementById("enemy1-name").value;
-    const enemyHp = Number(document.getElementById("enemy1-hp").value);
-    const enemyAtk = Number(document.getElementById("enemy1-atk").value);
-    const enemyDef = Number(document.getElementById("enemy1-def").value);
-    const enemySpd = Number(document.getElementById("enemy1-spd").value);
-    const party2 = new Party(2, [
-        new Character(enemyName, enemyHp, enemyAtk, enemyDef, enemySpd),
-    ]);
+    const playerEditors = document.querySelectorAll("#player-editors fieldset");
+    const playerChars = [];
+    playerEditors.forEach((_, i) => {
+        playerChars.push(getCharacterValues("char", i));
+    });
+    const party1 = new Party(1, playerChars);
+    // エネミー
+    const enemyEditors = document.querySelectorAll("#enemy-editors fieldset");
+    const enemyChars = [];
+    enemyEditors.forEach((_, i) => {
+        enemyChars.push(getCharacterValues("enemy", i));
+    });
+    const party2 = new Party(2, enemyChars);
     // バトル実行
     const battleSequence = new BattleSequence(party1, party2);
     const { result, logs } = battleSequence.execute();
@@ -44,26 +51,52 @@ export function handleBattleStart(output) {
     output.appendChild(resultElement);
 }
 
-/**
- * 画面初期化処理。キャラクターエディタの生成とイベントリスナーの登録を行う。
- */
+function addCharacterEditor(container, prefix, label, count) {
+    const editor = createCharacterEditor(
+        `${prefix}${count}`,
+        label + ` ${count}`
+    );
+    container.appendChild(editor);
+}
+
+function removeCharacterEditor(container) {
+    if (container.children.length > MIN_CHAR) {
+        container.removeChild(container.lastElementChild);
+    }
+}
+
 function initialize() {
     const output = document.getElementById("output");
     const startBtn = document.getElementById("start-btn");
-    const editors = document.getElementById("character-editors");
+    const playerEditors = document.getElementById("player-editors");
+    const enemyEditors = document.getElementById("enemy-editors");
+    const addPlayerBtn = document.getElementById("add-player-btn");
+    const removePlayerBtn = document.getElementById("remove-player-btn");
+    const addEnemyBtn = document.getElementById("add-enemy-btn");
+    const removeEnemyBtn = document.getElementById("remove-enemy-btn");
 
-    // 共通UIで2つのエディタを生成
-    const playerEditor = createCharacterEditor(
-        "char",
-        "プレイヤーキャラクター"
-    );
-    const enemyEditor = createCharacterEditor("enemy1", "敵キャラクター");
-    const groups = document.createElement("div");
-    groups.className = "form-groups";
-    groups.appendChild(playerEditor);
-    groups.appendChild(enemyEditor);
-    editors.appendChild(groups);
+    // 初期キャラ1体ずつ
+    addCharacterEditor(playerEditors, "char", "プレイヤー", 1);
+    addCharacterEditor(enemyEditors, "enemy", "エネミー", 1);
 
+    addPlayerBtn.addEventListener("click", () => {
+        const count = playerEditors.children.length;
+        if (count < MAX_CHAR) {
+            addCharacterEditor(playerEditors, "char", "プレイヤー", count + 1);
+        }
+    });
+    removePlayerBtn.addEventListener("click", () => {
+        removeCharacterEditor(playerEditors);
+    });
+    addEnemyBtn.addEventListener("click", () => {
+        const count = enemyEditors.children.length;
+        if (count < MAX_CHAR) {
+            addCharacterEditor(enemyEditors, "enemy", "エネミー", count + 1);
+        }
+    });
+    removeEnemyBtn.addEventListener("click", () => {
+        removeCharacterEditor(enemyEditors);
+    });
     startBtn.addEventListener("click", () => handleBattleStart(output));
 }
 
