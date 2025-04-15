@@ -9,6 +9,66 @@
     </head>
     <body>
         <h1>Battle Simulator</h1>
+        <form id="character-form">
+            <fieldset>
+                <legend>キャラクター編集</legend>
+                <label>
+                    名前:
+                    <input
+                        type="text"
+                        id="char-name"
+                        name="char-name"
+                        value="勇者"
+                        required
+                    /> </label
+                ><br />
+                <label>
+                    HP:
+                    <input
+                        type="number"
+                        id="char-hp"
+                        name="char-hp"
+                        value="100"
+                        min="1"
+                        required
+                    /> </label
+                ><br />
+                <label>
+                    攻撃力:
+                    <input
+                        type="number"
+                        id="char-atk"
+                        name="char-atk"
+                        value="20"
+                        min="1"
+                        required
+                    /> </label
+                ><br />
+                <label>
+                    防御力:
+                    <input
+                        type="number"
+                        id="char-def"
+                        name="char-def"
+                        value="10"
+                        min="0"
+                        required
+                    /> </label
+                ><br />
+                <label>
+                    素早さ:
+                    <input
+                        type="number"
+                        id="char-spd"
+                        name="char-spd"
+                        value="5"
+                        min="0"
+                        required
+                    /> </label
+                ><br />
+                <button type="button" id="start-btn">実行</button>
+            </fieldset>
+        </form>
         <div id="output"></div>
     </body>
 </html>
