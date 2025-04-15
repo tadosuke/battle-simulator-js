@@ -2,7 +2,56 @@ import Party from "./party.js";
 import Character from "./character.js";
 import { BattleSequence, BATTLE_RESULT } from "./battle-sequence.js";
 
-// 共通のキャラクターエディタUIを生成する関数
+/**
+ * バトル開始時の処理。フォームからキャラクター情報を取得し、バトルを実行して結果を表示する。
+ * @param {HTMLElement} output 結果表示用の要素
+ */
+export function handleBattleStart(output) {
+    output.innerHTML = "";
+    // プレイヤー
+    const name = document.getElementById("char-name").value;
+    const hp = Number(document.getElementById("char-hp").value);
+    const atk = Number(document.getElementById("char-atk").value);
+    const def = Number(document.getElementById("char-def").value);
+    const spd = Number(document.getElementById("char-spd").value);
+    const party1 = new Party(1, [new Character(name, hp, atk, def, spd)]);
+    // 敵
+    const enemyName = document.getElementById("enemy1-name").value;
+    const enemyHp = Number(document.getElementById("enemy1-hp").value);
+    const enemyAtk = Number(document.getElementById("enemy1-atk").value);
+    const enemyDef = Number(document.getElementById("enemy1-def").value);
+    const enemySpd = Number(document.getElementById("enemy1-spd").value);
+    const party2 = new Party(2, [
+        new Character(enemyName, enemyHp, enemyAtk, enemyDef, enemySpd),
+    ]);
+    // バトル実行
+    const battleSequence = new BattleSequence(party1, party2);
+    const { result, logs } = battleSequence.execute();
+    logs.forEach((log) => {
+        const logElement = document.createElement("p");
+        logElement.textContent = log;
+        output.appendChild(logElement);
+    });
+    const resultElement = document.createElement("h2");
+    resultElement.textContent = `Result: ${
+        result === BATTLE_RESULT.PARTY1_WON
+            ? "Party 1 Won"
+            : result === BATTLE_RESULT.PARTY2_WON
+            ? "Party 2 Won"
+            : "Draw"
+    }`;
+    output.appendChild(resultElement);
+}
+
+/**
+ * キャラクターエディタを作成する関数。
+ * 指定されたIDプレフィックスとラベルに基づいて、キャラクターの属性を入力するためのフォーム要素を生成します。
+ *
+ * @param {string} idPrefix - 各入力フィールドのIDに使用するプレフィックス。
+ *                            例: "char" または "enemy"。
+ * @param {string} label - フォームのラベルとして表示される文字列。
+ * @returns {HTMLFieldSetElement} キャラクターエディタを含むフィールドセット要素。
+ */
 function createCharacterEditor(idPrefix, label) {
     const wrapper = document.createElement("fieldset");
     wrapper.className = "form-group";
@@ -59,47 +108,7 @@ function initialize() {
     groups.appendChild(enemyEditor);
     editors.appendChild(groups);
 
-    /**
-     * バトル開始時の処理。フォームからキャラクター情報を取得し、バトルを実行して結果を表示する。
-     */
-    function handleBattleStart() {
-        output.innerHTML = "";
-        // プレイヤー
-        const name = document.getElementById("char-name").value;
-        const hp = Number(document.getElementById("char-hp").value);
-        const atk = Number(document.getElementById("char-atk").value);
-        const def = Number(document.getElementById("char-def").value);
-        const spd = Number(document.getElementById("char-spd").value);
-        const party1 = new Party(1, [new Character(name, hp, atk, def, spd)]);
-        // 敵
-        const enemyName = document.getElementById("enemy1-name").value;
-        const enemyHp = Number(document.getElementById("enemy1-hp").value);
-        const enemyAtk = Number(document.getElementById("enemy1-atk").value);
-        const enemyDef = Number(document.getElementById("enemy1-def").value);
-        const enemySpd = Number(document.getElementById("enemy1-spd").value);
-        const party2 = new Party(2, [
-            new Character(enemyName, enemyHp, enemyAtk, enemyDef, enemySpd),
-        ]);
-        // バトル実行
-        const battleSequence = new BattleSequence(party1, party2);
-        const { result, logs } = battleSequence.execute();
-        logs.forEach((log) => {
-            const logElement = document.createElement("p");
-            logElement.textContent = log;
-            output.appendChild(logElement);
-        });
-        const resultElement = document.createElement("h2");
-        resultElement.textContent = `Result: ${
-            result === BATTLE_RESULT.PARTY1_WON
-                ? "Party 1 Won"
-                : result === BATTLE_RESULT.PARTY2_WON
-                ? "Party 2 Won"
-                : "Draw"
-        }`;
-        output.appendChild(resultElement);
-    }
-
-    startBtn.addEventListener("click", handleBattleStart);
+    startBtn.addEventListener("click", () => handleBattleStart(output));
 }
 
 document.addEventListener("DOMContentLoaded", initialize);
