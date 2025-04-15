@@ -10,6 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const charAtkInput = document.getElementById("char-atk");
     const charDefInput = document.getElementById("char-def");
     const charSpdInput = document.getElementById("char-spd");
+    const enemy1NameInput = document.getElementById("enemy1-name");
+    const enemy1HpInput = document.getElementById("enemy1-hp");
+    const enemy1AtkInput = document.getElementById("enemy1-atk");
+    const enemy1DefInput = document.getElementById("enemy1-def");
+    const enemy1SpdInput = document.getElementById("enemy1-spd");
 
     startBtn.addEventListener("click", () => {
         // 出力をクリア
@@ -24,11 +29,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // ユーザーキャラ1体のパーティ
         const party1 = new Party(1, [new Character(name, hp, atk, def, spd)]);
-        // 敵パーティ（固定）
-        const party2 = new Party(2, [
-            new Character("Enemy1", 100, 15, 8, 7),
-            new Character("Enemy2", 90, 18, 6, 9),
-        ]);
+
+        // 敵キャラクター1
+        const enemy1 = new Character(
+            enemy1NameInput.value,
+            Number(enemy1HpInput.value),
+            Number(enemy1AtkInput.value),
+            Number(enemy1DefInput.value),
+            Number(enemy1SpdInput.value)
+        );
+
+        // 敵パーティ
+        const party2 = new Party(2, [enemy1]);
 
         // バトル実行
         const battleSequence = new BattleSequence(party1, party2);
