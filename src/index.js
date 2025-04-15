@@ -39,6 +39,9 @@ function createCharacterEditor(idPrefix, label) {
     return wrapper;
 }
 
+/**
+ * 画面初期化処理。キャラクターエディタの生成とイベントリスナーの登録を行う。
+ */
 function initialize() {
     const output = document.getElementById("output");
     const startBtn = document.getElementById("start-btn");
@@ -56,6 +59,9 @@ function initialize() {
     groups.appendChild(enemyEditor);
     editors.appendChild(groups);
 
+    /**
+     * バトル開始時の処理。フォームからキャラクター情報を取得し、バトルを実行して結果を表示する。
+     */
     function handleBattleStart() {
         output.innerHTML = "";
         // プレイヤー
