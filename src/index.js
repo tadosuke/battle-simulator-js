@@ -51,18 +51,37 @@ export function handleBattleStart(output) {
     output.appendChild(resultElement);
 }
 
+function updateButtonStates() {
+    const playerEditors = document.getElementById("player-editors");
+    const enemyEditors = document.getElementById("enemy-editors");
+    const addPlayerBtn = document.getElementById("add-player-btn");
+    const removePlayerBtn = document.getElementById("remove-player-btn");
+    const addEnemyBtn = document.getElementById("add-enemy-btn");
+    const removeEnemyBtn = document.getElementById("remove-enemy-btn");
+
+    const playerCount = playerEditors.children.length;
+    const enemyCount = enemyEditors.children.length;
+
+    addPlayerBtn.disabled = playerCount >= MAX_CHAR;
+    removePlayerBtn.disabled = playerCount <= MIN_CHAR;
+    addEnemyBtn.disabled = enemyCount >= MAX_CHAR;
+    removeEnemyBtn.disabled = enemyCount <= MIN_CHAR;
+}
+
 function addCharacterEditor(container, prefix, label, count) {
     const editor = createCharacterEditor(
         `${prefix}${count}`,
         label + ` ${count}`
     );
     container.appendChild(editor);
+    updateButtonStates();
 }
 
 function removeCharacterEditor(container) {
     if (container.children.length > MIN_CHAR) {
         container.removeChild(container.lastElementChild);
     }
+    updateButtonStates();
 }
 
 function initialize() {
@@ -78,6 +97,7 @@ function initialize() {
     // 初期キャラ1体ずつ
     addCharacterEditor(playerEditors, "char", "プレイヤー", 1);
     addCharacterEditor(enemyEditors, "enemy", "エネミー", 1);
+    updateButtonStates();
 
     addPlayerBtn.addEventListener("click", () => {
         const count = playerEditors.children.length;
