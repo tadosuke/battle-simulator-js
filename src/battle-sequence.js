@@ -33,6 +33,7 @@ export class BattleSequence {
         const logs = [];
 
         do {
+            logs.push(`---- ターン ${turnNum} ----`);
             let turn = new BattleTurn(turnNum, this.party1, this.party2);
             const { isFinished: turnFinished, logs: turnLogs } = turn.execute();
             logs.push(...turnLogs);
